@@ -5,7 +5,7 @@ import { GET_PEOPLE_AND_CARS } from '../../queries';
 import CreateCar from '../forms/CreateCar';
 
 
-const CarCardItem = ({ car, people, deleteCar}) => {
+const CarCardItem = ({ car, people, updateCar, deleteCar}) => {
 const [edit, setEdit] = useState(false);
 
   
@@ -28,7 +28,7 @@ const [edit, setEdit] = useState(false);
     ]}
     >
       
-      {edit ? <CreateCar people={people} /> :
+      {edit ? <CreateCar updateDone={() => setEdit(!edit)}  updateCarId={car.id} updateCar={updateCar} defaultValue={car} people={people} /> :
 
         <>
           <p>car: {car.year}</p>

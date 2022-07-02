@@ -1,15 +1,16 @@
 import { Button, Form, Input } from 'antd';
 import { GET_PEOPLE_AND_CARS } from '../../queries';
 
-const CreatePerson = ({ defaultValue, createPerson, updatePerson }) => {
+const CreatePerson = ({ updateDone, defaultValue, createPerson, updatePerson, updatePersonId }) => {
   const handleFinish = createPerson || updatePerson;
 
 
   const onFinish = (values) => {
     handleFinish({
-      variables: values,
+      variables: updatePersonId ? {...values, updatePersonId} : values,
       refetchQueries: [{ query: GET_PEOPLE_AND_CARS }]
     });
+    updateDone && updateDone();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -18,14 +19,13 @@ const CreatePerson = ({ defaultValue, createPerson, updatePerson }) => {
 
   return (
     <Form
-      // name="basic"
       labelCol={{
         span: 8,
       }}
    
-      defaultValue={defaultValue ? defaultValue :{
-        firstName: 'minte',
-        lastName: 'temple',
+      initialValues={defaultValue ? defaultValue :{
+        firstName: '',
+        lastName: '',
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}

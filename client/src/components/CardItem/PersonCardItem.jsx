@@ -37,7 +37,7 @@ const PersonCardItem = ({ person, updateCar, updatePerson, deletePerson, deleteC
 
       {
         edit &&
-          <CreatePerson  updatePerson={updatePerson} defaultValue={{firstName: person.firstName, lastName: person.lastName}} />
+          <CreatePerson updatePersonId={person.id} updateDone={() => setEdit(!edit)}  updatePerson={updatePerson} defaultValue={{firstName: person.firstName, lastName: person.lastName}} />
     }
       
         {cars.map(car => {

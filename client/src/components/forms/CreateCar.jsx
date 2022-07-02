@@ -2,15 +2,17 @@ import {Button, Form, Input, Select} from 'antd';
 import { GET_PEOPLE_AND_CARS } from '../../queries';
 
 
-const CreateCar = ({ people, createCar, updateCar, defaultValue }) => {
+const CreateCar = ({ people, createCar, updateCar, defaultValue, updateDone, updateCarId }) => {
     
     const handleFinish = createCar || updateCar;
+    
 
     const onFinish = (values) => {
         handleFinish({
-        variables: values,
+        variables: !updateCarId ? values : {...values, updateCarId},
         refetchQueries: [{ query: GET_PEOPLE_AND_CARS }]
         });
+        updateDone && updateDone();
         console.log('Successes:', values);
     };
     
@@ -18,13 +20,15 @@ const CreateCar = ({ people, createCar, updateCar, defaultValue }) => {
         console.log('Failed:', errorInfo);
     };
 
+    console.log('defaultValue', defaultValue);
+
     return (
         <Form name="basic"
             labelCol={
                 {span: 8}
             }
            
-            defaultValue={
+            initialValues={
             defaultValue ? defaultValue :
                 {
                     year: '',
